@@ -1,26 +1,68 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Plus from './Plus';
+import Minus from './Minus';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function FuncBtn({name}) {
+    return (
+        <button>
+            {name}버튼
+        </button>
+    )
 }
 
-export default App;
+class Input extends React.Component {
+    // static defaultProps = {
+    //   name: '이수'
+    // };
+
+    state = {
+        click: 0
+    };
+
+    onClickBtn = () => {
+        console.log('clicked!');
+        const {click} = this.state;
+        this.setState({click: click + 1})
+    };
+
+    render() {
+        console.log(this.state.click);
+        return (
+            <button onClick={this.onClickBtn}/>
+        )
+    }
+}
+
+export default class App extends React.Component {
+
+    state = {
+        click: 0,
+    };
+
+    handleIncrease = () => {
+        const {click} = this.state;
+        this.setState({click: click + 1});
+    };
+
+    handleDecrease = () => {
+        const {click} = this.state;
+        this.setState({click: click - 1});
+    };
+
+    render() {
+        const {click} = this.state;
+        const name = '이수';
+        const style = {
+            height: '100vh',
+            backgroundColor: 'black',
+            color: 'white'
+        };
+        return (
+            <div style={style}>
+                <Plus handleIncrease={this.handleIncrease}/>
+                {click}
+                <Minus handleDecrease={this.handleDecrease}/>
+            </div>
+        );
+    }
+}
